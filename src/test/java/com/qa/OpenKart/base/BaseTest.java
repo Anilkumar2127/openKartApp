@@ -6,22 +6,26 @@ import org.testng.annotations.BeforeTest;
 
 import com.qa.Factory.DriverFactory;
 import com.qa.Pages.LoginPage;
+import com.qa.Utilities.BrowserUtiles;
 
 public class BaseTest {
 
-	public WebDriver driver;
-	DriverFactory df;
+	private WebDriver driver=null;
+	public BrowserUtiles browutiles=null;
+	private DriverFactory df;
 	protected LoginPage loginpage; //access its value outside the package , but non subclass will not work ,subclass will work
 	
 	@BeforeTest
 	public void setUp() {
 		df=new DriverFactory(driver);
 		driver=df.initDriver("chrome");
+		browutiles =new BrowserUtiles(driver);
+		browutiles.launchUrl("https://naveenautomationlabs.com/opencart/index.php?route=account/login");
 		loginpage=new LoginPage(driver);
 	}
 	
 	@AfterTest
 	public void tearDown() {
-		driver.quit();
+		browutiles.quitBrowser();
 	}
 }
