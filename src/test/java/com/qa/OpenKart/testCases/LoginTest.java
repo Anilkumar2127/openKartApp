@@ -18,7 +18,7 @@ public class LoginTest extends BaseTest {
 		Assert.assertEquals(true, (actualUrl.contains("login")));
 	}
 	@Test(priority=3)
-	public void testLogin() {
+	public void testLogin() throws InterruptedException {
 		String actSuccessTitle=loginpage.doLogin("skyfall1997@gmail.com","Oracle123");
 		Assert.assertEquals(true, (actSuccessTitle.contains("My Account")));
 		
