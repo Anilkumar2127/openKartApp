@@ -3,6 +3,7 @@ package com.qa.Factory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 import com.qa.Exceptions.BrowserException;
 /*
@@ -29,6 +30,9 @@ public class DriverFactory {
 			break;
 		case "edge":
 			driver = new EdgeDriver();
+			break;
+		case "firefox":
+			driver = new FirefoxDriver();
 			break;
 		default:
 			System.out.println("Pass the valid browser");

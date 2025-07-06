@@ -7,6 +7,7 @@ import org.testng.annotations.BeforeTest;
 import com.qa.Factory.DriverFactory;
 import com.qa.Pages.LoginPage;
 import com.qa.Utilities.BrowserUtiles;
+import com.qa.Utilities.Constants;
 
 public class BaseTest {
 
@@ -20,7 +21,7 @@ public class BaseTest {
 		df=new DriverFactory(driver);
 		driver=df.initDriver("chrome");
 		browutiles =new BrowserUtiles(driver);
-		browutiles.launchUrl("https://naveenautomationlabs.com/opencart/index.php?route=account/login");
+		browutiles.launchUrl(Constants.URL);
 		loginpage=new LoginPage(driver);
 	}
 	

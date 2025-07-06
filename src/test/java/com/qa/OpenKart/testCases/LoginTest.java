@@ -1,9 +1,12 @@
 package com.qa.OpenKart.testCases;
 
+import java.io.IOException;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.qa.OpenKart.base.BaseTest;
+import com.qa.Utilities.Constants;
 
 public class LoginTest extends BaseTest {
 
@@ -18,8 +21,8 @@ public class LoginTest extends BaseTest {
 		Assert.assertEquals(true, (actualUrl.contains("login")));
 	}
 	@Test(priority=3)
-	public void testLogin() throws InterruptedException {
-		String actSuccessTitle=loginpage.doLogin("skyfall1997@gmail.com","Oracle123");
+	public void testLogin() throws InterruptedException, IOException {
+		String actSuccessTitle=loginpage.doLogin(Constants.USER_NAME,Constants.PASSWORD);
 		Assert.assertEquals(true, (actSuccessTitle.contains("My Account")));
 		
 		

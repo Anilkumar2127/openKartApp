@@ -2,8 +2,12 @@ package com.qa.Pages;
 
 
 
+import java.io.IOException;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+
+import com.qa.Utilities.Constants;
 
 
 public class LoginPage extends BasePage {
@@ -38,13 +42,14 @@ public class LoginPage extends BasePage {
 		return webelementutiles.isElementDisplayed(forgotPassword);
 	}
 
-	public String doLogin(String username, String password) throws InterruptedException {
+	public String doLogin(String username, String password) throws InterruptedException, IOException {
 		webelementutiles.fillTextBox(userName,username);
 		webelementutiles.fillTextBox(passWord,password);
 		webelementutiles.clickOnElement(loginBtn);
 		/*WebDriverWait wait =new WebDriverWait(driver,Duration.ofSeconds(2));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(myAccount));*/
-		Thread.sleep(3000);
+		//Thread.sleep(3000);
+		waitutilities.waitForElementVisible(myAccount,5);
 		return webelementutiles.getPageTitle();
 	}
 
