@@ -4,9 +4,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+
 public class WebElementUtiles {
 	private WebDriver driver;
-	
+	private WaitUtiles waitUtiles;
 	
 	public WebElementUtiles(WebDriver driver) {
 		this.driver=driver;
@@ -35,4 +36,11 @@ public class WebElementUtiles {
 	public void clickOnElement(By locator) {
 		elementLocator(locator).click();;
 	}
+	
+	public void waitAndClick(By locator,int timeOutInSeconds) {
+		this.waitUtiles.waitForElementVisible(locator,timeOutInSeconds);
+		elementLocator(locator).click();
+		
+	}
+	
 }
