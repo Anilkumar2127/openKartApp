@@ -1,15 +1,24 @@
 package com.qa.Utilities;
 
+import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.NoSuchWindowException;
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.locators.RelativeLocator;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.qa.Exceptions.ElementExceptions;
 
@@ -17,16 +26,16 @@ public class WebElementUtiles {
 	private WebDriver driver;
 	private Actions act = null;
 
-	private void nullcheck(CharSequence... value) {// CharSequence is an interface but implements by
-													// stringbuilder,stringbuffer and string classes
-		if (value == null) {
-			throw new ElementExceptions("==Please dont pass Null, pass charsequence value==");
-		}
-	}
-
 	public WebElementUtiles(WebDriver driver) {
 		this.driver = driver;
 		act = new Actions(driver);
+	}
+
+	private void nullcheck(CharSequence... value) {// CharSequence is an interface but implements by
+		// stringbuilder,stringbuffer and string classes
+		if (value == null) {
+			throw new ElementExceptions("==Please dont pass Null, pass charsequence value==");
+		}
 	}
 
 	/****************************
@@ -258,8 +267,8 @@ public class WebElementUtiles {
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////// RELATIVE LOCATOR INTRO AFTER
-	////////////////////////////////////////////////////////////////////////////////////////// 4.x//////////////////////////////
+	////////////////////////// RELATIVE LOCATOR INTRO AFTER 4.x//////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////
 	public String getLeftElementTextFromBaseLocator(By targetLocator, By referenceLocator) {
 		return driver.findElement(RelativeLocator.with(targetLocator).toLeftOf(referenceLocator)).getText();
@@ -274,8 +283,8 @@ public class WebElementUtiles {
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////// Drop Down WithOut Select
-	////////////////////////////////////////////////////////////////////////////////////////////// tag////////////////////////////////////////
+	///////////////////////// Drop Down WithOut Select tag////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////////// 
 	//////////////////////////////////////////////////////////////////////////////////////////////
 
 	/*
@@ -311,32 +320,195 @@ public class WebElementUtiles {
 	}
 
 	/*
-	 * //////////////////////Actions class elements///////////////////////////////////////////
+	 * //////////////////////Actions class
+	 * elements///////////////////////////////////////////
 	 */
-	
+
 	public void doActionClick(By locator) {
 		act.click(getElementLocator(locator)).build().perform();
 	}
 
-	public void doSendKeysAction(By locator,String value) {
+	public void doSendKeysAction(By locator, String value) {
 		act.sendKeys(value).build().perform();
 	}
-	/*		INTERVIEW QUESTION
-	 * Entering the string value one by one in text field using Actions class
+
+	/*
+	 * INTERVIEW QUESTION Entering the string value one by one in text field using
+	 * Actions class
+	 * 
 	 * @Params=Locator
+	 * 
 	 * @Params=Value to enter
-	 * @Params=Pause time 
+	 * 
+	 * @Params=Pause time
 	 */
-	public void doSendKeysWithPause(By locator,String value,int pauseTime) {
-		char val[]=value.toCharArray();
-		for(char v:val) {
-			act.sendKeys(getElementLocator(locator), String.valueOf(v))
-				.pause(pauseTime)
-					.build().perform();
+	public void doSendKeysWithPause(By locator, String value, int pauseTime) {
+		char val[] = value.toCharArray();// converting to char by char array for string
+		for (char v : val) {
+			act.sendKeys(getElementLocator(locator), String.valueOf(v)).pause(pauseTime).build().perform();// String.valueOf
+																											// converts
+																											// to string
 		}
 	}
-}
-//////////////////////////////////////////////////////////////////////////////////////////////
-
-
 	
+	
+///////////////////////////////////////////////////
+//////WindowHandles Utilites////////////////////
+//////////////////////////////////////////////////
+/*
+ * Driver switches to new tab or window
+ */
+	public  WebDriver switchToWindowOrTab() {
+		String childWinId = null;
+		Set<String> windows = driver.getWindowHandles();
+		try {
+			Iterator<String> it = windows.iterator();
+			it.next();
+			while (it.hasNext()) {
+				childWinId = it.next();
+			}
+			return driver.switchTo().window(childWinId);
+		} catch (NoSuchWindowException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+//////////////////////////////////////////////////
+///////Wait Utilities/////////////////////////////
+
+	public WebElement getElementLocator(By locator, int timeout) {
+		return waitForElementVisibile(locator, timeout);
+	}
+
+	public WebElement waitForElementPresence(By locator, int timeout) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+		return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+	}
+
+	public WebElement waitForElementVisibile(By locator, int timeout) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+		return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+	}
+
+	public void waitAndClick(By locator, int timeout) {
+		waitForElementVisibile(locator, timeout);
+	}
+
+	public Alert waitForAlertPopUp(int timeout,int pollingTime) {//Waiting the alert based on polling wait
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout),Duration.ofSeconds(pollingTime));
+		wait.pollingEvery(Duration.ofSeconds(pollingTime)).ignoring(NoSuchElementException.class,StaleElementReferenceException.class).withMessage("==Sry Element Not found==");
+		return wait.until(ExpectedConditions.alertIsPresent());// Automatically driver switches to alert
+	}
+
+	public void acceptAlertWithWait(int timeout,int pollingTime) {
+		Alert alert = waitForAlertPopUp(timeout,pollingTime);
+		alert.accept();
+	}
+
+	public void dismissAlertWithWait(int timeout,int pollingTime) {
+		Alert alert = waitForAlertPopUp(timeout,pollingTime);
+		alert.dismiss();
+	}
+
+	public void fillTextInAlertWithWait(String value, int timeout,int pollingTime) {
+		Alert alert = waitForAlertPopUp(timeout,pollingTime);
+		alert.sendKeys(value);
+	}
+
+	public String waitForPageTitleContains(String expected, int timeout) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+		try {
+			wait.until(ExpectedConditions.titleContains(expected));
+			return driver.getTitle();
+		} catch (TimeoutException e) {
+			return null;
+		}
+	}
+
+	public String waitForPageTitleIs(String expected, int timeout) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+		try {
+			wait.until(ExpectedConditions.titleIs(expected));
+			return driver.getTitle();
+		} catch (TimeoutException e) {
+			return null;
+		}
+	}
+
+	public String waitForUrlContains(String expUrl, int timeout) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+		try {
+			wait.until(ExpectedConditions.urlContains(expUrl));
+			return driver.getCurrentUrl();
+		} catch (TimeoutException e) {
+			return null;
+		}
+
+	}
+
+	public String waitForUrlToBe(String expUrl, int timeout) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+		try {
+			wait.until(ExpectedConditions.urlToBe(expUrl));
+			return driver.getCurrentUrl();
+		} catch (TimeoutException e) {
+			return null;
+		}
+
+	}
+
+	public void waitForFrameAndSwitchUsingWebElement(WebElement frameElement, int timeout) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameElement));
+	}
+
+	public void waitForFrameAndSwitchUsingBy(By framelocator, int timeout) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(framelocator));
+	}
+
+	public void waitForFrameAndSwitchUsingNameOrID(String frameNameOrId, int timeout) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameNameOrId));
+	}
+
+	public void waitForFrameAndSwitchUsingIndex(int frameIndex, int timeout) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameIndex));
+	}
+
+	public boolean WaitForWindowOpen(int expectedTotalWindows, int timeout) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+		try {
+			wait.until(ExpectedConditions.numberOfWindowsToBe(expectedTotalWindows));
+			return true;
+		} catch (TimeoutException e) {
+			System.out.println("Opened child windows are not matched with expected");
+			return false;
+		}
+
+	}
+	
+	public void clickWhenReady(By locator,int timeout) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+		wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
+	}
+	
+	/*
+	 * wait until atleast one element is visible on page 
+	 */
+	public List<WebElement> getElementsPresenceWithWait(By locator,int timeout) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+		return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
+		
+	}
+	/*
+	 * wait until all elements are visbile in page and returns list
+	 */
+	public List<WebElement> getElementsVisibilityWithWait(By locator,int timeout) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+		return wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));	
+	}
+
+}
