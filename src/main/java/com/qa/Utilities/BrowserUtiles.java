@@ -1,9 +1,11 @@
 	package com.qa.Utilities;
 
 import java.net.URL;
-
+import java.time.Duration;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.qa.Exceptions.BrowserException;
 
@@ -74,5 +76,13 @@ public class BrowserUtiles {
 		if(driver!=null) {
 			driver.close();
 		}
+	}
+	/*
+	 * Verifies whether page is loaded or not
+	 */
+	public boolean isPageLoaded(int timeout) {
+		WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(timeout));
+		String flag=wait.until(ExpectedConditions.jsReturnsValue("return document.readyState=== 'complete'")).toString();
+		return Boolean.parseBoolean(flag);
 	}
 }
