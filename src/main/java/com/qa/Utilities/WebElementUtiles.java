@@ -510,5 +510,6 @@ public class WebElementUtiles {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
 		return wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));	
 	}
+	
 
 }

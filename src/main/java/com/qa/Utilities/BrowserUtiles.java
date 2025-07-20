@@ -77,7 +77,9 @@ public class BrowserUtiles {
 			driver.close();
 		}
 	}
-	
+	/*
+	 * Verifies whether page is loaded or not
+	 */
 	public boolean isPageLoaded(int timeout) {
 		WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(timeout));
 		String flag=wait.until(ExpectedConditions.jsReturnsValue("return document.readyState=== 'complete'")).toString();
