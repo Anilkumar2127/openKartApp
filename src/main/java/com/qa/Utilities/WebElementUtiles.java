@@ -121,7 +121,7 @@ public class WebElementUtiles {
 		for (WebElement e : listOfElements) {
 			String text = e.getText();
 			if (text.length() != 0) {
-				System.out.println("actual elements Text ==> " + text);
+				//System.out.println("actual elements Text ==> " + text);
 				textList.add(text);
 			}
 		}

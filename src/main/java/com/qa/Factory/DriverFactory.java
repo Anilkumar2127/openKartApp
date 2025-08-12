@@ -1,5 +1,10 @@
 package com.qa.Factory;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -12,6 +17,7 @@ import com.qa.Exceptions.BrowserException;
  */
 public class DriverFactory {
 	protected WebDriver driver = null;
+	Properties prop=null;
 
 	public DriverFactory(WebDriver driver) {
 		this.driver = driver;
@@ -22,7 +28,8 @@ public class DriverFactory {
 	 * 
 	 * @paramName=browserName
 	 */
-	public WebDriver initDriver(String browserName) {
+	public WebDriver initDriver(Properties prop) {
+		String browserName=prop.getProperty("browser");
 		System.out.println("====Browser Opening:==" + browserName);
 		switch (browserName.toLowerCase().trim()) {
 		case "chrome":
@@ -39,6 +46,21 @@ public class DriverFactory {
 			throw new BrowserException("===Invalid Browser===");
 		}
 		return driver;
+	}
+	
+	public Properties initProp() {
+		 prop=new Properties();
+		 
+		 try {
+			FileInputStream io= new FileInputStream("./src/test/java/config/config.properties");
+			prop.load(io);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		 catch(IOException e) {
+			 e.printStackTrace();		 
+		 }
+		 return prop;
 	}
 	
 	

@@ -113,7 +113,7 @@ public class WaitUtiles {
 	 * @return webelement if element is present in DOM else will throw an timeout
 	 *         exception
 	 */
-	public WebElement waitForElementPresent(By locator, int timeOutInSeconds) {
+	public WebElement waitForElementPresent(By locator, int timeOutInSeconds) { //This em
 		try {
 			this.wait = new WebDriverWait(driver, Duration.ofSeconds(timeOutInSeconds));
 			return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
@@ -123,47 +123,46 @@ public class WaitUtiles {
 		}
 	}
 
-		public WebElement waitForElementVisible(By locator, int timeOutInSeconds, int pollingInSeconds) {
-			try {
-				this.waitf = new FluentWait<>(driver).withTimeout(Duration.ofSeconds(timeOutInSeconds))
-						.pollingEvery(Duration.ofSeconds(pollingInSeconds)).ignoring(NoSuchElementException.class)
-						.ignoring(ElementNotInteractableException.class);
-				
-				return wait.until(new Function<WebDriver, WebElement>() {
-					public WebElement apply(WebDriver driver) {
-						WebElement element = driver.findElement(locator);
-						if (element.isDisplayed() && element.isEnabled()) {
-							return element;
-						} else {
-							return null;
-						}
+	public WebElement waitForElementVisible(By locator, int timeOutInSeconds, int pollingInSeconds) {
+		try {
+			this.waitf = new FluentWait<>(driver).withTimeout(Duration.ofSeconds(timeOutInSeconds))
+					.pollingEvery(Duration.ofSeconds(pollingInSeconds)).ignoring(NoSuchElementException.class)
+					.ignoring(ElementNotInteractableException.class);
+
+			return wait.until(new Function<WebDriver, WebElement>() {
+				public WebElement apply(WebDriver driver) {
+					WebElement element = driver.findElement(locator);
+					if (element.isDisplayed() && element.isEnabled()) {
+						return element;
+					} else {
+						return null;
 					}
-				});
-			} catch (Exception e) {
-				System.out.println("Timeout: Element is not visible." + e.getMessage());
-				e.printStackTrace();
-				return null;
-			}
-	
+				}
+			});
+		} catch (Exception e) {
+			System.out.println("Timeout: Element is not visible." + e.getMessage());
+			e.printStackTrace();
+			return null;
 		}
-		
+
+	}
+
 	public List<WebElement> waitForAllElementsVisible(By locator, int timeOutInSeconds, int pollingInSeconds) {
 		try {
 			this.waitf = new FluentWait<>(driver).withTimeout(Duration.ofSeconds(timeOutInSeconds))
 					.pollingEvery(Duration.ofSeconds(pollingInSeconds)).ignoring(NoSuchElementException.class)
 					.ignoring(ElementNotInteractableException.class);
-			
+
 			return wait.until(new Function<WebDriver, List<WebElement>>() {
 				public List<WebElement> apply(WebDriver driver) {
 					List<WebElement> elements = driver.findElements(locator);
-					if(elements.isEmpty())
-					{
-						return Collections.emptyList() ;
+					if (elements.isEmpty()) {
+						return Collections.emptyList();
 					}
-					for(WebElement element:elements)
-					if (!element.isDisplayed() || !element.isEnabled()) {
-						return null;
-					} 
+					for (WebElement element : elements)
+						if (!element.isDisplayed() || !element.isEnabled()) {
+							return null;
+						}
 					return elements;
 				}
 			});

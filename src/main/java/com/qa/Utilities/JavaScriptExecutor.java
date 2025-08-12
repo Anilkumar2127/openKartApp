@@ -59,11 +59,11 @@ public class JavaScriptExecutor {
 	}
 
 	public void scrollToElementByJavaScriptExecutor(WebElement element) {
-		js.executeScript("argument[0].scrollIntoView(true)", element);
+		js.executeScript("arguments[0].scrollIntoView(true)", element);
 	}
 
 	public void drawBorderElementByJavaScriptExecute(WebElement element) {
-		js.executeScript("argument[0].style.border='3px solid red'", element);
+		js.executeScript("arguments[0].style.border='3px solid red'", element);
 	}
 
 	public void hightlightElementByJavaScriptExecutor(WebElement element) {
