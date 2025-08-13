@@ -11,7 +11,7 @@ public class LoginTest extends BaseTest {
 
 	@Test(priority = 0)
 	public void testTitleLoginPage() {
-		String actualTitle = loginpage.getLoginPageTile();
+		String actualTitle = loginpage.getLoginPageTitle();
 		Assert.assertEquals(actualTitle, "Account Login");
 	}
 
@@ -23,14 +23,23 @@ public class LoginTest extends BaseTest {
 
 	@Test(priority = 3)
 	public void testLogin() throws InterruptedException, IOException {
-		String actSuccessTitle = loginpage.doLogin("skyfall1997@gmail.com", "Oracle123");
-		Assert.assertEquals(true, (actSuccessTitle.contains("My Account")));
+		accountpage=loginpage.doLogin("skyfall1997@gmail.com", "Oracle123");
+		Assert.assertEquals(true, (accountpage.getAccountPageTitle().contains("My Account")));
 	}
 
 	@Test(priority = 0)
 	public void verifyForgetPasswordIsDisplayed() {
 		boolean checkValue = loginpage.isForgotPasswordExist();
 		Assert.assertEquals(checkValue, true);
+	}
+	
+	/*Should assert with registeration page 
+	 * pending the code
+	 */
+	@Test
+	
+	public void verifyRegisterBtnClicked() {
+		loginpage.clickElementInAppServicesList("Register");
 	}
 
 }

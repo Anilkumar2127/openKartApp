@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite" parallel="tests">
+	<test thread-count="5" name="SmokeTest">
+		<classes>
+			<class name="com.qa.OpenKart.testCases.ProductsTest" />
+		</classes>
+	</test> 
+	
+	<test thread-count="5" name="success">
+		<classes>
+			<class name="com.qa.OpenKart.testCases.OrderSuccessTest" />
+		</classes>
+	</test>
+</suite> 

@@ -5,25 +5,33 @@ package com.qa.Pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import static com.qa.Constants.AppConstants.*;
+import com.qa.Utilities.TimeUtiles;
+import com.qa.Utilities.*;
+
 
 public class LoginPage extends BasePage {
 	// private Locators
-	private final By forgotPassword = By.partialLinkText("abc");
+	private final By forgotPassword = By.partialLinkText("Forgotten Password");
 	private final By userName = By.id("input-email");
 	private final By passWord = By.id("input-password");
 	private final By loginBtn = By.xpath("//input[@type='submit']");
+	private final By appServices=By.cssSelector(".list-group a");
 	private final By myAccount = By.partialLinkText("My Account");
-
+	private final By referenceLocatorFromwebTable=By.xpath("//*[text()='Admin']");
+	private final By targetLocatorFromWebTable=By.tagName("a");
+	public WebDriver driver;
 
 	// public constructor
 	public LoginPage(WebDriver driver) {
 		super(driver);
+		this.driver=driver;
 
 	}
 
 	// page Methods
-	public String getLoginPageTile() {
-		String title = webelementutiles.getPageTitle();
+	public String getLoginPageTitle() {
+		String title = webelementutiles.waitForPageTitleIs("Account Login",DEFAULT_TIMEOUT);//Static constant import
 		System.out.println("The title is :" + title);
 		return title;
 	}
@@ -37,15 +45,18 @@ public class LoginPage extends BasePage {
 	public boolean isForgotPasswordExist() {
 		return webelementutiles.isElementDisplayed(forgotPassword);
 	}
+	
+	public void clickElementInAppServicesList(String expvalue) {
+		webelementutiles.clickOnSpecificElement(appServices,expvalue.toLowerCase().trim());
+	}
 
-	public String doLogin(String username, String password) throws InterruptedException {
-		webelementutiles.fillTextBox(userName,username);
+	public AcccountPage doLogin(String username, String password) {
+		webelementutiles.waitForElementVisibile(userName, DEFAULT_TIMEOUT).sendKeys(username);
 		webelementutiles.fillTextBox(passWord,password);
 		webelementutiles.clickOnElement(loginBtn);
-		/*WebDriverWait wait =new WebDriverWait(driver,Duration.ofSeconds(2));
-		wait.until(ExpectedConditions.visibilityOfElementLocated(myAccount));*/
-		Thread.sleep(3000);
-		return webelementutiles.getPageTitle();
+		return new AcccountPage(driver);
 	}
+
+	
 
 }

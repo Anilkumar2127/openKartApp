@@ -121,7 +121,7 @@ public class WebElementUtiles {
 		for (WebElement e : listOfElements) {
 			String text = e.getText();
 			if (text.length() != 0) {
-				System.out.println("actual elements Text ==> " + text);
+				//System.out.println("actual elements Text ==> " + text);
 				textList.add(text);
 			}
 		}
@@ -174,11 +174,13 @@ public class WebElementUtiles {
 	///////////////////////////////////////////////////////////////////////////////////////////
 	public void fillTextBox(By locator, String value) {
 		nullcheck(value);
+		getElementLocator(locator).clear();
 		getElementLocator(locator).sendKeys(value);
 	}
 
 	public void fillTextBox(By locator, CharSequence... value) {
 		nullcheck(value);
+		getElementLocator(locator).clear();
 		getElementLocator(locator).sendKeys(value);
 	}
 
@@ -266,6 +268,12 @@ public class WebElementUtiles {
 		}
 	}
 
+	///////////Radio Button///////////////////////////////////
+	//////////////////////////////////////////////////////////
+	public boolean isRadioButtonSelected(By locator) {
+		return getElementLocator(locator).isSelected();
+	}
+	
 	//////////////////////////////////////////////////////////////////////////////////////////
 	////////////////////////// RELATIVE LOCATOR INTRO AFTER 4.x//////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////
@@ -380,7 +388,12 @@ public class WebElementUtiles {
 	public WebElement getElementLocator(By locator, int timeout) {
 		return waitForElementVisibile(locator, timeout);
 	}
-
+	
+	public boolean waitAndgetStateOfRadioBtn(By locator, int timeout) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+		return wait.until(ExpectedConditions.visibilityOfElementLocated(locator)).isSelected();
+		
+	}
 	public WebElement waitForElementPresence(By locator, int timeout) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
 		return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
