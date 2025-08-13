@@ -32,6 +32,10 @@ public class LoginTest extends BaseTest {
 		boolean checkValue = loginpage.isForgotPasswordExist();
 		Assert.assertEquals(checkValue, true);
 	}
+	
+	/*Should assert with registeration page 
+	 * pending the code
+	 */
 	@Test
 	
 	public void verifyRegisterBtnClicked() {

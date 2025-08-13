@@ -8,10 +8,12 @@ import org.testng.annotations.BeforeTest;
 
 import com.qa.Factory.DriverFactory;
 import com.qa.Pages.AcccountPage;
-import com.qa.Pages.ShoppingKartPage;
+import com.qa.Pages.CheckoutPage;
 import com.qa.Pages.LoginPage;
+import com.qa.Pages.OrderSuccessPage;
 import com.qa.Pages.ProductInfoPage;
 import com.qa.Pages.ProductsPage;
+import com.qa.Pages.ShoppingKartPage;
 import com.qa.Utilities.BrowserUtiles;
 
 public class BaseTest {
@@ -25,6 +27,8 @@ public class BaseTest {
 	protected ProductsPage productsPage;
 	protected ProductInfoPage productInfoPage;
 	protected ShoppingKartPage shoppingKartPage;
+	protected CheckoutPage checkoutpage;
+	protected OrderSuccessPage ordersuccesspage;
 	
 	@BeforeTest
 	public void setUp() {

@@ -9,7 +9,7 @@ import org.openqa.selenium.WebElement;
 import com.qa.Constants.AppConstants;
 
 public class ProductInfoPage extends BasePage {
-	private WebDriver driver;
+	public  WebDriver driver;
 	private By selectedProdItem = By.tagName("h1");
 	private By successAlertMsg = By.className("alert-success");
 	private By addToCartbtn = By.id("button-cart");
@@ -22,12 +22,12 @@ public class ProductInfoPage extends BasePage {
 		this.driver = driver;
 	}
 
+	
 	public boolean isItemAddSuccessAlertMsgDisplayed() {
-		return webelementutiles.isElementDisplayed(successAlertMsg);
+		return webelementutiles.waitForElementVisibile(successAlertMsg,AppConstants.DEFAULT_TIMEOUT ).isDisplayed();
 	}
 
 	public void addToCart() {
-
 		if (webelementutiles.isElementDisplayed(selectedProdItem)) {
 			webelementutiles.clickOnElement(addToCartbtn);
 		}
@@ -35,6 +35,10 @@ public class ProductInfoPage extends BasePage {
 
 	public List<String> getProductItemDetails() {
 		return webelementutiles.getTextFromElements(productDetails);
+	}
+	
+	public boolean selectedProductItemDisplayed() {
+		return webelementutiles.isElementDisplayed(selectedProdItem);
 	}
 
 	public ShoppingKartPage clickOnShoppingCart() {

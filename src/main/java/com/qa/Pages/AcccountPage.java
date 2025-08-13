@@ -26,13 +26,12 @@ public class AcccountPage extends BasePage {
 	}
 	public ProductsPage searchProduct(String productName) {
 		js.hightlightElementByJavaScriptExecutor(webelementutiles.getElementLocator(search, DEFAULT_TIMEOUT));
-		webelementutiles.fillTextBox(search,"");
-		webelementutiles.doSendKeysWithPause(search,productName,2);
+		webelementutiles.fillTextBox(search, productName);
 		js.drawBorderElementByJavaScriptExecute(webelementutiles.getElementLocator(searchbtn));
 		webelementutiles.clickOnElement(searchbtn);
 		return new ProductsPage(driver);
 	}
-
+	
 	public List<String> getAccountHeaderList() {
 		return webelementutiles.getTextFromElements(acctHeader);
 	}

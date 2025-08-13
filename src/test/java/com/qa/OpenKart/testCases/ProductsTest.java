@@ -15,18 +15,20 @@ public class ProductsTest extends BaseTest{
 	
 	@Test(priority=0)
 	public void validateProductsCount() {
-		productsPage=accountpage.searchProduct("HP");
+		productsPage=accountpage.searchProduct("mac");
 		int actProductCount=productsPage.getSeachProductCount();
 		System.out.println("Actual ProductCount ="+ actProductCount);
-		Assert.assertEquals(actProductCount,1);
+		Assert.assertEquals(actProductCount,4);
 	}
 	
 	
 	@Test(priority=1)
 	public void clickSearchedProductItem() {
 		String expProduct="HP LP3065";
-		//productsPage=accountpage.searchProduct("mac");
-		productsPage.clickOnResultItem(expProduct);
+		productsPage=accountpage.searchProduct("HP");
+		productInfoPage=productsPage.clickOnResultItem(expProduct);
+		Assert.assertEquals(true,productInfoPage.selectedProductItemDisplayed());
+		
 	}
 
 }

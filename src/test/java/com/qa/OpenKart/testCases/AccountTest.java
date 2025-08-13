@@ -25,7 +25,8 @@ public class AccountTest extends BaseTest {
 	
 	@Test(priority=1)
 	public void validateSearchProduct() {
-		accountpage.searchProduct("macbook");
+		productsPage=accountpage.searchProduct("macbook");
+		Assert.assertEquals(true,productsPage.getProductsHeaderText().equalsIgnoreCase("Products meeting the search criteria"));
 	}
 	@Test(priority=0)
 	public void validateAccountHeaders() {

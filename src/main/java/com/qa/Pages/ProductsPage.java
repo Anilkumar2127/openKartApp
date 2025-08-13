@@ -10,6 +10,7 @@ import com.qa.Constants.AppConstants;
 
 public class ProductsPage extends BasePage {
 	private By products = By.cssSelector("div.product-thumb div h4 a");
+	private By productsHeaderText=By.tagName("h2");
 	public WebDriver driver;
 
 	public ProductsPage(WebDriver driver) {
@@ -38,5 +39,8 @@ public class ProductsPage extends BasePage {
 	
 	}
 	
+	public String getProductsHeaderText() {
+		return webelementutiles.waitForElementVisibile(productsHeaderText, AppConstants.DEFAULT_TIMEOUT).getText();
+	}
 
 }

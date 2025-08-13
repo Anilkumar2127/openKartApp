@@ -4,11 +4,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import com.qa.Constants.AppConstants;
+import com.qa.Utilities.TimeUtiles;
 
 
 public class ShoppingKartPage extends BasePage {
 
-	protected WebDriver driver;
+	public WebDriver driver;
 	private By checkoutbtn=By.partialLinkText("Checkout");
 	private By shoppingHeader=By.tagName("h1");
 	public ShoppingKartPage(WebDriver driver) {

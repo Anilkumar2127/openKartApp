@@ -51,11 +51,11 @@ public class JavaScriptExecutor {
 	}
 
 	public void scrollPageDownByJavaScriptExecutor() {
-		js.executeScript("0,window.scrollTo(document.body.scrollHeight)");
+		js.executeScript("window.scrollTo(0,document.body.scrollHeight);");
 	}
 
 	public void scrollPageUpByJavaScriptExecutor() {
-		js.executeScript("window.scrollTo(document.body.scrollHeight),0");
+		js.executeScript("window.scrollTo(0,0");
 	}
 
 	public void scrollToElementByJavaScriptExecutor(WebElement element) {
