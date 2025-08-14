@@ -68,7 +68,7 @@ public class JavaScriptExecutor {
 
 	public void hightlightElementByJavaScriptExecutor(WebElement element) {
 		String bgColor = element.getCssValue("background-color");
-		String wishColor = "rgb(255, 255, 0)";
+		String wishColor = "rgb(255, 255, 0)";//yellow
 		for (int i = 0; i < 10; i++) {
 			changeColor(wishColor, element);
 			changeColor(bgColor, element);
