@@ -52,7 +52,7 @@ public class DriverFactory {
 		 prop=new Properties();
 		 
 		 try {
-			FileInputStream io= new FileInputStream("./src/test/java/config/config.properties");
+			FileInputStream io= new FileInputStream("./src/test/resources/config/config.properties");
 			prop.load(io);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

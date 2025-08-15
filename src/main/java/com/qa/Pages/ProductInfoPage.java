@@ -9,13 +9,13 @@ import org.openqa.selenium.WebElement;
 import com.qa.Constants.AppConstants;
 
 public class ProductInfoPage extends BasePage {
-	public  WebDriver driver;
-	private By selectedProdItem = By.tagName("h1");
-	private By successAlertMsg = By.className("alert-success");
-	private By addToCartbtn = By.id("button-cart");
-	private By productDetails = By.cssSelector(".col-sm-4 ul");
-	private By productQuantity = By.xpath("//*[@id='product']");
-	private By shoppingCartBtn = By.partialLinkText("shopping cart");
+	private  WebDriver driver;
+	private final By selectedProdItem = By.tagName("h1");
+	private final By successAlertMsg = By.className("alert-success");
+	private final By addToCartbtn = By.id("button-cart");
+	private final By productDetails = By.cssSelector(".col-sm-4 ul");
+	private final By productQuantity = By.xpath("//*[@id='product']");
+	private final By shoppingCartBtn = By.partialLinkText("shopping cart");
 
 	public ProductInfoPage(WebDriver driver) {
 		super(driver);

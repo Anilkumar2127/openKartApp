@@ -8,6 +8,7 @@ import org.testng.annotations.BeforeTest;
 
 import com.qa.Factory.DriverFactory;
 import com.qa.Pages.AcccountPage;
+import com.qa.Pages.AccountRegisterPage;
 import com.qa.Pages.CheckoutPage;
 import com.qa.Pages.LoginPage;
 import com.qa.Pages.OrderSuccessPage;
@@ -24,6 +25,7 @@ public class BaseTest {
 	Properties prop;
 	protected LoginPage loginpage;//access its value outside the package , but non subclass will not work ,subclass will work
 	protected AcccountPage accountpage;
+	protected AccountRegisterPage accregpage;
 	protected ProductsPage productsPage;
 	protected ProductInfoPage productInfoPage;
 	protected ShoppingKartPage shoppingKartPage;

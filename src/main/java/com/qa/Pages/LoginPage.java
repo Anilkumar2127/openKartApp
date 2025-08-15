@@ -2,12 +2,10 @@ package com.qa.Pages;
 
 
 
+import static com.qa.Constants.AppConstants.DEFAULT_TIMEOUT;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-
-import static com.qa.Constants.AppConstants.*;
-import com.qa.Utilities.TimeUtiles;
-import com.qa.Utilities.*;
 
 
 public class LoginPage extends BasePage {
@@ -20,7 +18,8 @@ public class LoginPage extends BasePage {
 	private final By myAccount = By.partialLinkText("My Account");
 	private final By referenceLocatorFromwebTable=By.xpath("//*[text()='Admin']");
 	private final By targetLocatorFromWebTable=By.tagName("a");
-	public WebDriver driver;
+	private final By registerationbtn=By.partialLinkText("Register");
+	private WebDriver driver;
 
 	// public constructor
 	public LoginPage(WebDriver driver) {
@@ -55,6 +54,11 @@ public class LoginPage extends BasePage {
 		webelementutiles.fillTextBox(passWord,password);
 		webelementutiles.clickOnElement(loginBtn);
 		return new AcccountPage(driver);
+	}
+	
+	public AccountRegisterPage navigateToRegisteration() {
+		webelementutiles.clickOnElement(registerationbtn);
+		return new AccountRegisterPage(driver);
 	}
 
 	
