@@ -9,9 +9,9 @@ import org.openqa.selenium.WebElement;
 import com.qa.Constants.AppConstants;
 
 public class ProductsPage extends BasePage {
-	private By products = By.cssSelector("div.product-thumb div h4 a");
-	private By productsHeaderText=By.tagName("h2");
-	public WebDriver driver;
+	private final By products = By.cssSelector("div.product-thumb div h4 a");
+	private final By productsHeaderText=By.tagName("h2");
+	private WebDriver driver;
 
 	public ProductsPage(WebDriver driver) {
 		super(driver);

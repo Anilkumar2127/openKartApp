@@ -7,24 +7,24 @@ import com.qa.Constants.AppConstants;
 import com.qa.Utilities.TimeUtiles;
 
 public class CheckoutPage extends BasePage {
-	public WebDriver driver;
-	private By permanentAddress = By.xpath("//input[@name='payment_address' and @value='new']");
-	private By billingDetailsToggle = By.cssSelector(".accordion-toggle");
-	private By checkoutHeader = By.tagName("h1");
-	private By firstName = By.name("firstname");
-	private By lastName = By.name("lastname");
-	private By address = By.name("address_1");
-	private By city = By.name("city");
-	private By postalCode = By.name("postcode");
-	private By countryCode = By.name("country_id");
-	private By state = By.name("zone_id");
-	private By billingContinueBtn = By.xpath("//*[@value='Continue']");
-	private By deliveryDetailsContinueBtn = By.id("button-shipping-address");
-	private By deliveryMethodContinueBtn = By.id("button-shipping-method");
-	private By paymentMethodContinueBtn = By.id("button-payment-method");
-	private By agreeCheckbtn = By.xpath("//*[@name='agree']");
-	private By product = By.xpath("(//td[@class='text-left']/a)[2]");
-	private By confirmOrderBtn=By.id("button-confirm");
+	private WebDriver driver;
+	private final By permanentAddress = By.xpath("//input[@name='payment_address' and @value='new']");
+	private final By billingDetailsToggle = By.cssSelector(".accordion-toggle");
+	private final By checkoutHeader = By.tagName("h1");
+	private final By firstName = By.name("firstname");
+	private final By lastName = By.name("lastname");
+	private final By address = By.name("address_1");
+	private final By city = By.name("city");
+	private final By postalCode = By.name("postcode");
+	private final By countryCode = By.name("country_id");
+	private final By state = By.name("zone_id");
+	private final By billingContinueBtn = By.xpath("//*[@value='Continue']");
+	private final By deliveryDetailsContinueBtn = By.id("button-shipping-address");
+	private final By deliveryMethodContinueBtn = By.id("button-shipping-method");
+	private final By paymentMethodContinueBtn = By.id("button-payment-method");
+	private final By agreeCheckbtn = By.xpath("//*[@name='agree']");
+	private final By product = By.xpath("(//td[@class='text-left']/a)[2]");
+	private final By confirmOrderBtn=By.id("button-confirm");
 
 	public CheckoutPage(WebDriver driver) {
 		super(driver);

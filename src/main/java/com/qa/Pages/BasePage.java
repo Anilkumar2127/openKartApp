@@ -15,6 +15,7 @@ public class BasePage {
 		webelementutiles=new WebElementUtiles(driver);	
 		browserutiles=new BrowserUtiles(driver);	
 		js=new JavaScriptExecutor(driver);
+		
 	}
 	
 

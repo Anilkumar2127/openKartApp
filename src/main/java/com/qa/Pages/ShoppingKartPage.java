@@ -9,9 +9,9 @@ import com.qa.Utilities.TimeUtiles;
 
 public class ShoppingKartPage extends BasePage {
 
-	public WebDriver driver;
-	private By checkoutbtn=By.partialLinkText("Checkout");
-	private By shoppingHeader=By.tagName("h1");
+	private WebDriver driver;
+	private final By checkoutbtn=By.partialLinkText("Checkout");
+	private final By shoppingHeader=By.tagName("h1");
 	public ShoppingKartPage(WebDriver driver) {
 		super(driver);
 		this.driver=driver;
