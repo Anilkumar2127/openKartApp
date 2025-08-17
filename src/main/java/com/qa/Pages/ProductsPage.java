@@ -28,7 +28,6 @@ public class ProductsPage extends BasePage {
 				 String prodtext =prod.getText();
 					if (prodtext.equalsIgnoreCase(product)) {
 					js.scrollToElementByJavaScriptExecutor(prod);
-					js.hightlightElementByJavaScriptExecutor(prod);
 					prod.click();
 					break;
 				}

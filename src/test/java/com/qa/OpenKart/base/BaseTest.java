@@ -5,6 +5,7 @@ import java.util.Properties;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Parameters;
 
 import com.qa.Factory.DriverFactory;
 import com.qa.Pages.AcccountPage;
@@ -32,10 +33,18 @@ public class BaseTest {
 	protected CheckoutPage checkoutpage;
 	protected OrderSuccessPage ordersuccesspage;
 	
+	@Parameters({"browser"})
 	@BeforeTest
-	public void setUp() {
+	public void setUp(String browserName) {
 		df=new DriverFactory(driver);
 		Properties prop=df.initProp();
+		/*
+		 * Getting Browser value from the TestNG.xml files
+		 */
+		if(browserName!=null) {
+			prop.setProperty("browser", browserName);
+		}
+		
 		driver=df.initDriver(prop);
 		browutiles =new BrowserUtiles(driver);
 		browutiles.launchUrl(prop.getProperty("Baseurl"));

@@ -30,7 +30,6 @@ public class AccountRegisterPage extends BasePage {
 	
 	public boolean doUserRegister(String firstname,String lastname,String telephone,String password,
 			String subscribe) {	
-		js.hightlightElementByJavaScriptExecutor(webelementutiles.getElementLocator(firstName));
 		webelementutiles.waitForElementVisibile(firstName,AppConstants.DEFAULT_TIMEOUT).sendKeys(firstname);
 		webelementutiles.waitForElementVisibile(lastName,AppConstants.DEFAULT_TIMEOUT).sendKeys(lastname);
 		webelementutiles.waitForElementVisibile(emailAddress,AppConstants.DEFAULT_TIMEOUT).sendKeys(StringUtiles.getDummyEmailAddress());

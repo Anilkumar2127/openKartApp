@@ -25,7 +25,7 @@ public class AcccountPage extends BasePage {
 		return title;
 	}
 	public ProductsPage searchProduct(String productName) {
-		js.hightlightElementByJavaScriptExecutor(webelementutiles.getElementLocator(search, DEFAULT_TIMEOUT));
+		webelementutiles.waitForElementVisibile(search, DEFAULT_TIMEOUT);
 		webelementutiles.fillTextBox(search, productName);
 		js.drawBorderElementByJavaScriptExecute(webelementutiles.getElementLocator(searchbtn));
 		webelementutiles.clickOnElement(searchbtn);
