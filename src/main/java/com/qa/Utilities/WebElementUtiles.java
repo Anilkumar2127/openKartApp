@@ -21,13 +21,16 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.qa.Exceptions.ElementExceptions;
+import com.qa.Factory.DriverFactory;
 
 public class WebElementUtiles {
 	private WebDriver driver;
 	private Actions act = null;
+	private JavaScriptExecutor js;
 
 	public WebElementUtiles(WebDriver driver) {
 		this.driver = driver;
+		js=new JavaScriptExecutor(driver);
 		act = new Actions(driver);
 	}
 
@@ -35,6 +38,12 @@ public class WebElementUtiles {
 		// stringbuilder,stringbuffer and string classes
 		if (value == null) {
 			throw new ElementExceptions("==Please dont pass Null, pass charsequence value==");
+		}
+	}
+	
+	private void highLightElement(WebElement element) {
+		if(Boolean.parseBoolean(DriverFactory.highlight)) {
+			js.hightlightElementByJavaScriptExecutor(element);
 		}
 	}
 
@@ -85,12 +94,15 @@ public class WebElementUtiles {
 	 ******************************/
 
 	public WebElement getElementLocator(By locator) {
-		return driver.findElement(locator);
+		WebElement ele=driver.findElement(locator);
+		highLightElement(ele);
+		return ele;
 	}
 
 	/********************************
 	 * WebElments to getElements
-	 ********************************/
+	 *******************
+	 **************/
 	/*
 	 * Description:It returns multiple element locators
 	 * 
@@ -386,7 +398,9 @@ public class WebElementUtiles {
 ///////Wait Utilities/////////////////////////////
 
 	public WebElement getElementLocator(By locator, int timeout) {
-		return waitForElementVisibile(locator, timeout);
+		 WebElement ele=waitForElementVisibile(locator, timeout);
+		highLightElement(ele);
+		return ele;
 	}
 	
 	public boolean waitAndgetStateOfRadioBtn(By locator, int timeout) {
@@ -401,7 +415,9 @@ public class WebElementUtiles {
 
 	public WebElement waitForElementVisibile(By locator, int timeout) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
-		return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+		 WebElement ele=wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+		 highLightElement(ele);
+		 return ele;
 	}
 
 	public void waitAndClick(By locator, int timeout) {

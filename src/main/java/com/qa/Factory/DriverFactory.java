@@ -18,6 +18,8 @@ import com.qa.Exceptions.BrowserException;
 public class DriverFactory {
 	protected WebDriver driver = null;
 	Properties prop=null;
+	public static String highlight;
+	OptionManager optmanager;
 
 	public DriverFactory(WebDriver driver) {
 		this.driver = driver;
@@ -30,16 +32,19 @@ public class DriverFactory {
 	 */
 	public WebDriver initDriver(Properties prop) {
 		String browserName=prop.getProperty("browser");
+		highlight=prop.getProperty("highlight");
 		System.out.println("====Browser Opening:==" + browserName);
+		optmanager=new OptionManager(prop);
+		
 		switch (browserName.toLowerCase().trim()) {
 		case "chrome":
-			driver = new ChromeDriver();
+			driver = new ChromeDriver(optmanager.getChromeOptions());
 			break;
 		case "edge":
-			driver = new EdgeDriver();
+			driver = new EdgeDriver(optmanager.getEdgeOptions());
 			break;
 		case "firefox":
-			driver = new FirefoxDriver();
+			driver = new FirefoxDriver(optmanager.getFireFoxOptions());
 			break;
 		default:
 			System.out.println("Pass the valid browser");

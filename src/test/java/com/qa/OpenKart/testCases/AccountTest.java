@@ -17,7 +17,7 @@ public class AccountTest extends BaseTest {
 		accountpage=loginpage.doLogin("skyfall1997@gmail.com", "Oracle123");
 	}
 	
-	@Test(priority=0)
+	@Test(priority=0,enabled=true,description="Validating the AccountTitle")
 	public void verifyMyAccountPageTitle() {
 		String actualTitle=accountpage.getAccountPageTitle();
 		Assert.assertEquals(actualTitle, "My Account");
