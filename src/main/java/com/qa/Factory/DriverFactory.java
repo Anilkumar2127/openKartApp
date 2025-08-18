@@ -11,6 +11,7 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import com.qa.Exceptions.BrowserException;
+import com.qa.Exceptions.FrameworkException;
 /*
  * Properties Files initialization
  * Driver initialization
@@ -54,10 +55,43 @@ public class DriverFactory {
 	}
 	
 	public Properties initProp() {
-		 prop=new Properties();
-		 
+		FileInputStream io= null;
+		String envname=System.getProperty("env");
+		try {
+			if(envname==null) {
+				System.out.println("Running the scripts in QA environment...");
+				io= new FileInputStream("./src/test/resources/config/qa.config.properties");
+			}
+			else
+			{
+				switch(envname.toLowerCase().trim()) { 	
+				case "qa":
+					System.out.println("Running the scripts in environment..."+envname);
+					io= new FileInputStream("./src/test/resources/config/qa.config.properties");
+					break;
+				case "dev":
+					System.out.println("Running the scripts in environment..."+envname);
+					io= new FileInputStream("./src/test/resources/config/dev.config.properties");
+					break;
+				case "uat":
+					System.out.println("Running the scripts in environment..."+envname);
+					io= new FileInputStream("./src/test/resources/config/uat.config.properties");
+					break;
+				
+					default :
+						throw new FrameworkException("Sry Invalid env..."+envname); 
+				}
+			}
+			
+		}
+		catch(RuntimeException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	
+		prop=new Properties();
 		 try {
-			FileInputStream io= new FileInputStream("./src/test/resources/config/config.properties");
 			prop.load(io);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
