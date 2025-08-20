@@ -21,7 +21,6 @@ public class AcccountPage extends BasePage {
 	
 	public String getAccountPageTitle() {
 		String title = webelementutiles.waitForPageTitleIs("My Account",DEFAULT_TIMEOUT);//Static constant import
-		System.out.println("The title is :" + title);
 		return title;
 	}
 	public ProductsPage searchProduct(String productName) {

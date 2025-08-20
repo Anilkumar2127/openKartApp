@@ -15,7 +15,7 @@ public class OrderSuccessTest extends BaseTest {
 		
 		
 		@Test
-		public void validateSuccessText() {
+		public void validateHpSuccessText() {
 			productsPage=accountpage.searchProduct("HP");
 			productInfoPage=productsPage.clickOnResultItem("HP LP3065");
 			productInfoPage.addToCart();
@@ -29,5 +29,6 @@ public class OrderSuccessTest extends BaseTest {
 			ordersuccesspage=checkoutpage.clickOnConfirmOrderBtn();
 			Assert.assertEquals(true,ordersuccesspage.getSuccessUrl().contains("success"));
 		}
+		
 		
 }
