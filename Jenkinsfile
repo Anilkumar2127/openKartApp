@@ -16,7 +16,7 @@ pipeline{
 		}
 		stage("Regression test "){
 			steps{
-				catchError(buildResult:'Success',stageResult:'Failure'){
+				catchError(buildResult:'SUCCESS',stageResult:'FAILURE'){
 					git 'https://github.com/Anilkumar2127/openKartApp.git'
 					bat "mvn clean test -Denv=dev -DsuiteXmlFile=SmokeTest"
 				}
@@ -30,9 +30,9 @@ pipeline{
 					alwaysLinkToLastBuild:false,
 					keepAll:true,
 					reportDir:'target/chaintest',
-					reportFiels:'Index.html'
+					reportFiles:'Index.html'
 					reportName:'HTML Smoke Test Report',
-					reportTitles:''])
+					])
 				echo("test the project")
 			}
 		}
