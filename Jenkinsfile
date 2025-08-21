@@ -35,8 +35,6 @@ pipeline{
                                   reportTitles: ''])
             }
         }
-
-		}
 		stage("prod"){
 			steps{
 				echo("prod the project")
