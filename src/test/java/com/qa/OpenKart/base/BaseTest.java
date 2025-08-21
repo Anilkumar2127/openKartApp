@@ -67,9 +67,14 @@ public class BaseTest {
 	@AfterMethod
 	public void attachScreenShotInReport(ITestResult result) {
 		if(!(result.isSuccess())) {
+			LoggerUtiles.info("-----------Failed And Taking ScreenShot----------------------");
 			 ChainTestListener.embed(DriverFactory.takeScreenShot(),"image/png");
 		}
 		LoggerUtiles.info("----------Ended Test Case------------------:"+result.getMethod().getMethodName());
+		if(result.isSuccess()) {
+			LoggerUtiles.info("-----------Passed----------------------");
+		}
+		
 	}
 
 	@AfterTest
