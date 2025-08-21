@@ -18,7 +18,7 @@ pipeline{
 			steps{
 				catchError(buildResult:'SUCCESS',stageResult:'FAILURE'){
 					git 'https://github.com/Anilkumar2127/openKartApp.git'
-					bat "mvn clean test -Denv=dev -DsuiteXmlFile=SmokeTest"
+					bat "mvn clean test -Denv=dev"
 				}
 				
 				echo("qa the project")
