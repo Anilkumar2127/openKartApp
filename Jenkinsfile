@@ -24,17 +24,18 @@ pipeline{
 				echo("qa the project")
 			}
 		}
-		stage("publish chainTest report"){
-			steps{
-					publishHTML([allowMissing:false,
-					alwaysLinkToLastBuild:false,
-					keepAll:true,
-					reportDir:'target/chaintest',
-					reportFiles:'Index.html'
-					reportName:'HTML Smoke Test Report',
-					])
-				echo("test the project")
-			}
+		stage('Publish ChainTest Report'){
+            steps{
+                     publishHTML([allowMissing: false,
+                                  alwaysLinkToLastBuild: false, 
+                                  keepAll: true, 
+                                  reportDir: 'target/chaintest', 
+                                  reportFiles: 'Index.html', 
+                                  reportName: 'HTML Regression ChainTest Report', 
+                                  reportTitles: ''])
+            }
+        }
+
 		}
 		stage("prod"){
 			steps{
