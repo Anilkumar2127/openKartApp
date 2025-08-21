@@ -1,23 +1,38 @@
 pipeline{
 	agent any
+	tools{
+		maven 'maven'
+	}
 	stages{
 		stage("build"){
 			steps{
 				echo("Build the project")
 			}
 		}
-		stage("deploy"){
+		stage("deploy to QA"){
 			steps{
-				echo("deply the project")
+				echo("deployed to QA the project")
 			}
 		}
-		stage("qa"){
+		stage("Regression test "){
 			steps{
+				catchError(buildResult:'Success',stageResult:'Failure'){
+					git 'https://github.com/Anilkumar2127/openKartApp.git'
+					bat "mvn clean test -Denv=dev -DsuiteXmlFile=SmokeTest"
+				}
+				
 				echo("qa the project")
 			}
 		}
-		stage("test"){
+		stage("publish chainTest report"){
 			steps{
+					publishHTML([allowMissing:false,
+					alwaysLinkToLastBuild:false,
+					keepAll:true,
+					reportDir:'target/chaintest',
+					reportFiels:'Index.html'
+					reportName:'HTML Smoke Test Report',
+					reportTitles:''])
 				echo("test the project")
 			}
 		}
