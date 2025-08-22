@@ -1,52 +1,42 @@
 pipeline{
-    agent any
-    tools{
-        maven 'Maven'
-        jdk 'JDK1.8'
-    }
-    stages{
-        stage("Build"){
+	agent any
+	tools{
+		maven 'Maven'
+	}
+	stages{
+		stage("build"){
+			steps{
+				echo("Build the project")
+			}
+		}
+		stage("deploy to QA"){
+			steps{
+				echo("deployed to QA the project")
+			}
+		}
+		stage("Regression test "){
+			steps{
+				catchError(buildResult:'SUCCESS',stageResult:'FAILURE'){
+					git 'https://github.com/Anilkumar2127/openKartApp.git'
+					bat "mvn clean test"
+				}
+			}
+		}
+		stage('Publish ChainTest Report'){
             steps{
-                echo "Building the project..."
-                bat "mvn clean install"
+                     publishHTML([allowMissing: false,
+                                  alwaysLinkToLastBuild: false, 
+                                  keepAll: true, 
+                                  reportDir: 'target/chaintest', 
+                                  reportFiles: 'Index.html', 
+                                  reportName: 'HTML Regression ChainTest Report', 
+                                  reportTitles: ''])
             }
         }
-        
-        stage("Deploy to QA"){
-            steps{
-                echo "Deploying to QA..."
-                // Add actual deploy steps if needed
-            }
-        }
-        
-        stage("Regression Test"){
-            steps{
-                checkout([$class: 'GitSCM', branches: [[name: '*/anilchanges']],
-                          userRemoteConfigs: [[url: 'https://github.com/Anilkumar2127/openKartApp.git']]])
-                
-                echo "Running Selenium tests..."
-                catchError(buildResult:'SUCCESS',stageResult:'FAILURE'){
-                    bat "mvn clean test"
-                }
-            }
-        }
-        
-        stage('Publish ChainTest Report'){
-            steps{
-                publishHTML([allowMissing: true,
-                             alwaysLinkToLastBuild: false,
-                             keepAll: true,
-                             reportDir: 'target/chaintest', 
-                             reportFiles: 'Index.html', 
-                             reportName: 'HTML Regression ChainTest Report'])
-            }
-        }
-        
-        stage("Production"){
-            steps{
-                echo "Deploying to production..."
-                // Add production steps if required
-            }
-        }
-    }
+		stage("prod"){
+			steps{
+				echo("prod the project")
+			}
+		}
+	}
 }
