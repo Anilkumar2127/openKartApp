@@ -121,7 +121,7 @@
 					<forkCount>3</forkCount>
 					<reuseForks>true</reuseForks>
 					<suiteXmlFiles>
-						<suiteXmlFile>src/test/resources/Runners/Regression.xml</suiteXmlFile>
+						<suiteXmlFile>src/test/resources/Runners/${XmlFile}.xml</suiteXmlFile>
 						<!--<suiteXmlFile>${suiteXmlFile}</suiteXmlFile>-->
 					</suiteXmlFiles>
 					<!-- add under sure fire plug for allure configuration-->
