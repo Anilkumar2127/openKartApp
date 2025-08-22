@@ -30,17 +30,6 @@ pipeline{
 				}
 			}
 		}
-		stage('Publish ChainTest Report for sanity'){
-            steps{
-                     publishHTML([allowMissing: false,
-                                  alwaysLinkToLastBuild: false, 
-                                  keepAll: true, 
-                                  reportDir: 'target/sanity-report', 
-                                  reportFiles: 'Index.html', 
-                                  reportName: 'HTML Sanity ChainTest Report', 
-                                  reportTitles: ''])
-            }
-        }
         
 		stage("deploy to QA"){
 			steps{
@@ -60,7 +49,7 @@ pipeline{
                      publishHTML([allowMissing: false,
                                   alwaysLinkToLastBuild: false, 
                                   keepAll: true, 
-                                  reportDir: 'target/regression-report', 
+                                  reportDir: 'target/chaintest', 
                                   reportFiles: 'Index.html', 
                                   reportName: 'HTML Regression ChainTest Report', 
                                   reportTitles: ''])
@@ -80,19 +69,6 @@ pipeline{
 				}
 			}
 		}
-		
-		stage('Publish ChainTest Report for smoke Test'){
-            steps{
-                     publishHTML([allowMissing: false,
-                                  alwaysLinkToLastBuild: false, 
-                                  keepAll: true, 
-                                  reportDir: 'target/smoke-report', 
-                                  reportFiles: 'Index.html', 
-                                  reportName: 'HTML Smoke ChainTest Report', 
-                                  reportTitles: ''])
-            }
-        }
-        
 		stage("prod"){
 			steps{
 				echo("prod the project")
