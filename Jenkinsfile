@@ -30,7 +30,7 @@ pipeline{
 				}
 			}
 		}
-		stage('Publish ChainTest Report for Regression'){
+		stage('Publish ChainTest Report for sanity'){
             steps{
                      publishHTML([allowMissing: false,
                                   alwaysLinkToLastBuild: false, 
