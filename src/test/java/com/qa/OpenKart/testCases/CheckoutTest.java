@@ -22,7 +22,7 @@ public class CheckoutTest extends BaseTest{
 		productInfoPage.addToCart();
 		shoppingKartPage=productInfoPage.clickOnShoppingCart();
 		checkoutpage=shoppingKartPage.clickOnCheckOutbtn();
-		checkoutpage.fillBillingDetails("anil", "kumar", "nampally", "hydera", "53007","India","Goa");
+		checkoutpage.fillBillingDetails("anil", "kumar", "nampally", "hyder", "53007","India","Goa");
 		checkoutpage.clickOnDeliveryDetailsContinue();
 		checkoutpage.clickOnDeliveryMethodContinue();
 		checkoutpage.clickAgreeCheckBox();
