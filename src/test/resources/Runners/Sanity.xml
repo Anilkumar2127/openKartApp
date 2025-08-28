@@ -7,7 +7,7 @@
 		<!-- <listener class-name="com.qa.Listeners.MyannotationTransformer" />-->
 	</listeners>
 	<test thread-count="5" name="AccountTest">
-	<parameter name="browser" value="edge"></parameter>
+	<parameter name="browser" value="chrome"></parameter>
 		<classes>
 			<class name="com.qa.OpenKart.testCases.AccountTest" />
 		</classes>
