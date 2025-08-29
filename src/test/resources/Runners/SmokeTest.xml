@@ -12,10 +12,10 @@
 		</classes>
 	</test> 
 	
-<!-- 	<test thread-count="5" name="success">
+ 	<!-- <test thread-count="5" name="success">
 	<parameter name="browser" value="chrome"></parameter>
 		<classes>
 			<class name="com.qa.OpenKart.testCases.OrderSuccessTest" />
 		</classes>
-	</test>>-->
+	</test>-->
 </suite> 

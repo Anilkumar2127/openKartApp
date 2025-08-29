@@ -25,16 +25,16 @@ import com.qa.Exceptions.FrameworkException;
  * Driver initialization
  */
 public class DriverFactory {
-	protected static WebDriver driver = null;
+	protected  WebDriver driver = null;
 
 	private static final Logger log = LogManager.getLogger(DriverFactory.class);
-	//public static ThreadLocal<WebDriver> tldriver=new ThreadLocal<WebDriver>();
+	public static ThreadLocal<WebDriver> tldriver=new ThreadLocal<WebDriver>();
 	Properties prop=null;
 	public static String highlight;
 	OptionManager optmanager;
 
 	public DriverFactory(WebDriver driver) {
-		DriverFactory.driver = driver;
+		this.driver = driver;
 	}
 
 	
@@ -58,37 +58,36 @@ public class DriverFactory {
 				intRemoteWebDriver(browserName);
 			}
 			else {
-				driver = new ChromeDriver(optmanager.getChromeOptions());
-				//tldriver.set(new ChromeDriver(optmanager.getChromeOptions()));
-				break;
+				//driver = new ChromeDriver(optmanager.getChromeOptions());
+				tldriver.set(new ChromeDriver(optmanager.getChromeOptions()));
 			}
+			break;
 			
 		case "edge":
 			if(Boolean.parseBoolean(prop.getProperty("remote"))) {
 				intRemoteWebDriver(browserName);
 			}
 			else {
-			driver = new EdgeDriver(optmanager.getEdgeOptions());
-			//tldriver.set(new EdgeDriver(optmanager.getEdgeOptions()));
-			break;
+			//driver = new EdgeDriver(optmanager.getEdgeOptions());
+			tldriver.set(new EdgeDriver(optmanager.getEdgeOptions()));
 			}
-			
+			break;
 		case "firefox":
 			if(Boolean.parseBoolean(prop.getProperty("remote"))) {
 				intRemoteWebDriver(browserName);
 			}
 			else {
-			driver = new FirefoxDriver(optmanager.getFireFoxOptions());
-			//tldriver.set(new FirefoxDriver(optmanager.getFireFoxOptions()));
-			break;
+			//driver = new FirefoxDriver(optmanager.getFireFoxOptions());
+			tldriver.set(new FirefoxDriver(optmanager.getFireFoxOptions()));
 			}
+			break;
 			
 		default:
 			System.out.println("Pass the valid browser");
 			throw new BrowserException("===Invalid Browser===");
 		}
-		return driver;
-		//return tldriver.get();
+		//return driver;
+		return tldriver.get();
 	}
 	
 	public Properties initProp() {
@@ -153,8 +152,8 @@ public class DriverFactory {
 		
 		case "chrome":
 			try {
-			driver=new RemoteWebDriver(new URL(prop.getProperty("huburl")),optmanager.getChromeOptions());
-				//tldriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")),optmanager.getChromeOptions()));
+			//driver=new RemoteWebDriver(new URL(prop.getProperty("huburl")),optmanager.getChromeOptions());
+				tldriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")),optmanager.getChromeOptions()));
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -162,7 +161,8 @@ public class DriverFactory {
 			break;
 		case "firefox":
 			try {
-				driver=new RemoteWebDriver(new URL(prop.getProperty("huburl")),optmanager.getFireFoxOptions());
+				tldriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")),optmanager.getFireFoxOptions()));
+				//driver=new RemoteWebDriver(new URL(prop.getProperty("huburl")),optmanager.getFireFoxOptions());
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -170,7 +170,8 @@ public class DriverFactory {
 			break;
 		case "edge":
 			try {
-				driver=new RemoteWebDriver(new URL(prop.getProperty("huburl")),optmanager.getEdgeOptions());
+				tldriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")),optmanager.getEdgeOptions()));
+				//driver=new RemoteWebDriver(new URL(prop.getProperty("huburl")),optmanager.getEdgeOptions());
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -189,16 +190,16 @@ public class DriverFactory {
 	/*Screenshot logic for ChainTestReport*/
 	
 	public static File takeScreenShot() {
-		File fs=((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		File fs=((TakesScreenshot)getDriver()).getScreenshotAs(OutputType.FILE);
 		//File fs=((TakesScreenshot)tldriver.get()).getScreenshotAs(OutputType.FILE);
 		return fs;
 	}
 	
 	/*Provide local webdriver using LocalThread Class*/
 	
-	/*public static WebDriver getDriver() {
+	public static WebDriver getDriver() {
 		return tldriver.get();
-	}*/
+	}
 
 
 	
