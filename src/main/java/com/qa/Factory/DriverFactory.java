@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Properties;
 
 import org.apache.logging.log4j.LogManager;
@@ -14,6 +16,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import com.qa.Exceptions.BrowserException;
 import com.qa.Exceptions.FrameworkException;
@@ -22,7 +25,7 @@ import com.qa.Exceptions.FrameworkException;
  * Driver initialization
  */
 public class DriverFactory {
-	protected WebDriver driver = null;
+	protected  WebDriver driver = null;
 
 	private static final Logger log = LogManager.getLogger(DriverFactory.class);
 	public static ThreadLocal<WebDriver> tldriver=new ThreadLocal<WebDriver>();
@@ -43,28 +46,47 @@ public class DriverFactory {
 	public WebDriver initDriver(Properties prop) {
 		log.info("Properties :"+ prop);
 		String browserName=prop.getProperty("browser");
+		
 		highlight=prop.getProperty("highlight");
 		log.info("browserName  :"+browserName);
-		//System.out.println("====Browser Opening:==" + browserName);
+		System.out.println("====Browser Opening:==" + browserName);
 		optmanager=new OptionManager(prop);
 		
 		switch (browserName.toLowerCase().trim()) {
 		case "chrome":
-			//driver = new ChromeDriver(optmanager.getChromeOptions());
-			tldriver.set(new ChromeDriver(optmanager.getChromeOptions()));
+			if(Boolean.parseBoolean(prop.getProperty("remote"))) {
+				intRemoteWebDriver(browserName);
+			}
+			else {
+				//driver = new ChromeDriver(optmanager.getChromeOptions());
+				tldriver.set(new ChromeDriver(optmanager.getChromeOptions()));
+			}
 			break;
+			
 		case "edge":
+			if(Boolean.parseBoolean(prop.getProperty("remote"))) {
+				intRemoteWebDriver(browserName);
+			}
+			else {
 			//driver = new EdgeDriver(optmanager.getEdgeOptions());
 			tldriver.set(new EdgeDriver(optmanager.getEdgeOptions()));
+			}
 			break;
 		case "firefox":
+			if(Boolean.parseBoolean(prop.getProperty("remote"))) {
+				intRemoteWebDriver(browserName);
+			}
+			else {
 			//driver = new FirefoxDriver(optmanager.getFireFoxOptions());
 			tldriver.set(new FirefoxDriver(optmanager.getFireFoxOptions()));
+			}
 			break;
+			
 		default:
 			System.out.println("Pass the valid browser");
 			throw new BrowserException("===Invalid Browser===");
 		}
+		//return driver;
 		return tldriver.get();
 	}
 	
@@ -122,9 +144,54 @@ public class DriverFactory {
 	}
 	
 	
+	
+	
+	private void intRemoteWebDriver(String browserOption) {
+		
+		switch(browserOption) {
+		
+		case "chrome":
+			try {
+			//driver=new RemoteWebDriver(new URL(prop.getProperty("huburl")),optmanager.getChromeOptions());
+				tldriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")),optmanager.getChromeOptions()));
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		case "firefox":
+			try {
+				tldriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")),optmanager.getFireFoxOptions()));
+				//driver=new RemoteWebDriver(new URL(prop.getProperty("huburl")),optmanager.getFireFoxOptions());
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		case "edge":
+			try {
+				tldriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")),optmanager.getEdgeOptions()));
+				//driver=new RemoteWebDriver(new URL(prop.getProperty("huburl")),optmanager.getEdgeOptions());
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		break;
+		
+		default :
+			log.warn("Invalid browserOption :"+browserOption);
+			throw new BrowserException("Sry Invalid browser in grid..."+browserOption); 
+		}
+	}
+	
+	
+	
+	
 	/*Screenshot logic for ChainTestReport*/
+	
 	public static File takeScreenShot() {
-		File fs=((TakesScreenshot)tldriver.get()).getScreenshotAs(OutputType.FILE);
+		File fs=((TakesScreenshot)getDriver()).getScreenshotAs(OutputType.FILE);
+		//File fs=((TakesScreenshot)tldriver.get()).getScreenshotAs(OutputType.FILE);
 		return fs;
 	}
 	

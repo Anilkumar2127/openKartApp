@@ -55,6 +55,7 @@ public class BaseTest {
 		}
 		driver = df.initDriver(prop);
 		browutiles = new BrowserUtiles(driver);
+		//System.out.println("--=-=-"+prop.getProperty("Baseurl"));
 		browutiles.launchUrl(prop.getProperty("Baseurl"));
 		loginpage = new LoginPage(driver);
 
